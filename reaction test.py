@@ -15,7 +15,6 @@ if "target_time" not in st.session_state:
     st.session_state.target_time = 0
 
 
-# 테스트 시작 함수
 def start_test():
     wait_time = random.uniform(2, 5)
     st.session_state.target_time = time.time() + wait_time
@@ -23,24 +22,26 @@ def start_test():
     st.session_state.show_click_button = False
 
 
-# 반응 시간 기록 함수
 def record_reaction():
     st.session_state.reaction_time = time.time() - st.session_state.start_time
     st.session_state.show_click_button = False
 
 
-# 상태에 따른 UI 표시
+# 시작 버튼
 if st.button("🟢 테스트 시작"):
     start_test()
 
-# 대기 상태 처리
+# 상태 체크 및 UI
 if st.session_state.target_time > 0 and not st.session_state.show_click_button:
     current_time = time.time()
     if current_time >= st.session_state.target_time:
         st.session_state.start_time = current_time
         st.session_state.show_click_button = True
+        st.experimental_rerun()
     else:
-        st.write("⏳ 준비 중...")
+        st.write("⏳ 준비 중... (곧 버튼이 나타납니다)")
+        time.sleep(0.1)  # 아주 짧게 기다림
+        st.experimental_rerun()  # 반복 실행
 
 # 클릭 버튼 표시
 if st.session_state.show_click_button:
