@@ -37,11 +37,11 @@ if st.session_state.target_time > 0 and not st.session_state.show_click_button:
     if current_time >= st.session_state.target_time:
         st.session_state.start_time = current_time
         st.session_state.show_click_button = True
-        st.experimental_rerun()
+        st.rerun()  # ✅ 여기 수정
     else:
         st.write("⏳ 준비 중... (곧 버튼이 나타납니다)")
-        time.sleep(0.1)  # 아주 짧게 기다림
-        st.experimental_rerun()  # 반복 실행
+        time.sleep(0.1)
+        st.rerun()  # ✅ 여기 수정
 
 # 클릭 버튼 표시
 if st.session_state.show_click_button:
